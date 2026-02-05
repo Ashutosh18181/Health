@@ -4,7 +4,9 @@ import { ArrowLeft, AlertTriangle, ShieldCheck, Stethoscope, Pill, Brain, Calend
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-export default async function DiseaseDetail({ params }: { params: { id: string } }) {
+export default async function DiseaseDetail(props: { params: Promise<{ id: string }> }) {
+    const params = await props.params;
+    const { id } = params;
     const supabase = await createClient();
 
     const { data: disease } = await supabase
@@ -19,7 +21,7 @@ export default async function DiseaseDetail({ params }: { params: { id: string }
           )
         )
       `)
-        .eq('id', params.id)
+        .eq('id', id)
         .single();
 
     if (!disease) {
