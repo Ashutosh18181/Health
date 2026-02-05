@@ -47,6 +47,9 @@ async function seed() {
         icd_code: d.icd,
         risk_level: d.risk,
         general_advice: d.advice,
+        prevention: d.prevention,
+        treatment: d.treatment,
+        specialist: d.specialist,
         description: `A condition characterized by ${d.symptoms.slice(0, 3).join(', ')}.`
     }));
 

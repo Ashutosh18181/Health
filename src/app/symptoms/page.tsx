@@ -66,16 +66,54 @@ export default function SymptomChecker() {
         }
     };
 
+    const commonSymptoms = [
+        "Fever", "Cough", "Headache", "Fatigue", "Nausea",
+        "Sore throat", "Runny nose", "Chills"
+    ];
+
+    const handleQuickAdd = async (name: string) => {
+        // We need to fetch the ID for the symptom first, or handle name-only logic if API allows key-value
+        // But for this quick UX, we'll hit the search API for exact match to get full object
+        setLoading(true);
+        try {
+            const res = await fetch(`/api/symptoms/search?q=${name}`);
+            const data = await res.json();
+            if (data.data && data.data.length > 0) {
+                // Find exact match or first
+                const match = data.data.find((s: any) => s.name.toLowerCase() === name.toLowerCase()) || data.data[0];
+                addSymptom(match);
+            }
+        } catch (e) { console.error(e); }
+        setLoading(false);
+    };
+
     return (
         <div className="container mx-auto px-4 py-8 max-w-4xl">
-            <div className="mb-8">
-                <h1 className="text-3xl font-bold mb-2">Symptom Checker</h1>
-                <p className="text-muted-foreground">Search and add your symptoms to get a preliminary analysis.</p>
+            <div className="mb-8 text-center sm:text-left">
+                <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent inline-block">Symptom Checker</h1>
+                <p className="text-muted-foreground">Select your symptoms to get an instant AI-powered health analysis.</p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">
                 {/* Left Column: Input */}
                 <div className="space-y-6">
+
+                    {/* Quick Select Chips */}
+                    <div>
+                        <p className="text-sm font-medium mb-3 text-muted-foreground">Common Symptoms</p>
+                        <div className="flex flex-wrap gap-2">
+                            {commonSymptoms.map(s => (
+                                <button
+                                    key={s}
+                                    onClick={() => handleQuickAdd(s)}
+                                    className="px-3 py-1.5 rounded-full bg-secondary hover:bg-primary/10 hover:text-primary border border-transparent hover:border-primary/20 transition-all text-sm font-medium"
+                                >
+                                    {s}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
                     <div className="relative">
                         <div className="relative">
                             <Search className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
