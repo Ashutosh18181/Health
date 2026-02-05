@@ -5,29 +5,29 @@ import Link from 'next/link';
 
 export default function Navbar() {
     return (
-        <nav className="border-b bg-white dark:bg-slate-950/50 backdrop-blur-md sticky top-0 z-50">
-            <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-                <Link href="/" className="flex items-center space-x-2">
-                    <div className="size-8 bg-primary rounded-lg flex items-center justify-center">
-                        <span className="text-white font-bold text-xl">+</span>
+        <nav className="border-b bg-background/80 backdrop-blur-md sticky top-0 z-50">
+            <div className="container mx-auto px-4 h-18 flex items-center justify-between">
+                <Link href="/" className="flex items-center space-x-2 group">
+                    <div className="size-10 bg-primary rounded-xl flex items-center justify-center transition-transform group-hover:rotate-12">
+                        <span className="text-white font-bold text-2xl">+</span>
                     </div>
-                    <span className="text-xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+                    <span className="text-2xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-tight">
                         Diagnostic
                     </span>
                 </Link>
 
-                <div className="hidden md:flex items-center space-x-6 text-sm font-medium text-muted-foreground">
-                    <Link href="/symptoms" className="hover:text-primary transition-colors">Symptom Checker</Link>
-                    <Link href="/diseases" className="hover:text-primary transition-colors">Disease Encyclopedia</Link>
-                    <Link href="/about" className="hover:text-primary transition-colors">About</Link>
+                <div className="hidden md:flex items-center space-x-8 text-sm font-semibold">
+                    <Link href="/symptoms" className="text-muted-foreground hover:text-primary transition-colors">Symptom Checker</Link>
+                    <Link href="/diseases" className="text-muted-foreground hover:text-primary transition-colors">Encyclopedia</Link>
+                    <Link href="/#about" className="text-muted-foreground hover:text-primary transition-colors">About Us</Link>
                 </div>
 
-                <div className="flex items-center space-x-4">
-                    <Link href="/login" className="text-sm font-medium hover:text-primary">
+                <div className="flex items-center space-x-5">
+                    <Link href="/login" className="text-sm font-semibold hover:text-primary transition-colors">
                         Log In
                     </Link>
                     <Link href="/signup">
-                        <button className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                        <button className="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5">
                             Get Started
                         </button>
                     </Link>

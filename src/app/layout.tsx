@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 // I'll stick to system sans for now or basic config, but Next usually provides a font import.
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         <main>
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );

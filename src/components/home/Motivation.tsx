@@ -21,37 +21,50 @@ export function Motivation() {
     }, []);
 
     return (
-        <section className="py-24 bg-gradient-to-br from-indigo-600 to-purple-700 text-white relative overflow-hidden">
+        <section className="py-32 bg-slate-900 text-white relative overflow-hidden">
             {/* Background Patterns */}
-            <div className="absolute inset-0 opacity-10 bg-[url('/file.svg')] bg-repeat opacity-5" />
+            <div className="absolute inset-0 z-0">
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-emerald-900/40 via-slate-900 to-cyan-900/40 opacity-60" />
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
+            </div>
 
             <div className="container mx-auto px-4 relative z-10 text-center">
-                <Quote className="w-12 h-12 mx-auto mb-8 opacity-50" />
+                <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    className="size-16 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-10 border border-primary/30"
+                >
+                    <Quote className="size-8 text-primary" />
+                </motion.div>
 
-                <div className="h-48 flex items-center justify-center">
+                <div className="min-h-[200px] flex items-center justify-center">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
-                            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                            exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
-                            transition={{ duration: 0.8 }}
+                            initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+                            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                            exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
+                            transition={{ duration: 0.8, ease: "circOut" }}
                             className="max-w-4xl"
                         >
-                            <h2 className="text-3xl md:text-5xl font-serif italic mb-6 leading-tight">
+                            <h2 className="text-3xl md:text-5xl font-serif italic mb-8 leading-tight tracking-tight">
                                 "{quotes[index].text}"
                             </h2>
-                            <p className="text-xl opacity-80 font-medium">— {quotes[index].author}</p>
+                            <div className="flex items-center justify-center gap-3">
+                                <div className="h-px w-8 bg-primary/50" />
+                                <p className="text-xl text-primary font-bold tracking-widest uppercase">{quotes[index].author}</p>
+                                <div className="h-px w-8 bg-primary/50" />
+                            </div>
                         </motion.div>
                     </AnimatePresence>
                 </div>
 
-                <div className="flex justify-center gap-2 mt-8">
+                <div className="flex justify-center gap-3 mt-16">
                     {quotes.map((_, i) => (
                         <button
                             key={i}
                             onClick={() => setIndex(i)}
-                            className={`w-3 h-3 rounded-full transition-all ${i === index ? 'bg-white scale-125' : 'bg-white/30 hover:bg-white/50'}`}
+                            className={`h-1.5 rounded-full transition-all duration-500 ${i === index ? 'w-10 bg-primary' : 'w-4 bg-white/20 hover:bg-white/40'}`}
                         />
                     ))}
                 </div>
