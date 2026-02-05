@@ -6,7 +6,6 @@ import { notFound } from 'next/navigation';
 
 export default async function DiseaseDetail(props: { params: Promise<{ id: string }> }) {
     const params = await props.params;
-    const { id } = params;
     const supabase = await createClient();
 
     const { data: disease } = await supabase
@@ -21,7 +20,7 @@ export default async function DiseaseDetail(props: { params: Promise<{ id: strin
           )
         )
       `)
-        .eq('id', id)
+        .eq('id', params.id)
         .single();
 
     if (!disease) {

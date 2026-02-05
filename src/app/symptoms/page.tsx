@@ -76,7 +76,7 @@ export default function SymptomChecker() {
             });
             const data = await res.json();
             if (data.error) throw new Error(data.error);
-            setResults(data.results || []);
+            setResults(data.data);
         } catch (err: any) {
             setError(err.message || 'Failed to analyze symptoms.');
         } finally {

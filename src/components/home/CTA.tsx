@@ -1,19 +1,12 @@
 'use client';
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
 
 export function CTA() {
-    const [mounted, setMounted] = useState(false);
-    useEffect(() => setMounted(true), []);
-
-    if (!mounted) return null;
-
     return (
         <section className="py-24 px-4">
             <div className="container mx-auto">
                 <div className="relative rounded-3xl overflow-hidden bg-slate-900 text-white px-6 py-16 md:p-20 text-center">
-                    {/* Background Gradients */}
                     <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-indigo-900/50 to-emerald-900/50 z-0" />
                     <div className="absolute -top-24 -right-24 w-64 h-64 bg-emerald-500 rounded-full blur-[100px] opacity-30" />
                     <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-indigo-500 rounded-full blur-[100px] opacity-30" />
@@ -39,9 +32,6 @@ export function CTA() {
                                 Subscribe <Send className="w-4 h-4" />
                             </motion.button>
                         </div>
-                        <p className="text-xs text-slate-500 mt-6 max-w-xs mx-auto">
-                            By subscribing, you agree to our Terms and Privacy Policy. No spam, ever.
-                        </p>
                     </div>
                 </div>
             </div>

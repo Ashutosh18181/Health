@@ -1,5 +1,4 @@
 'use client';
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
@@ -25,11 +24,6 @@ const articles = [
 ];
 
 export function FeaturedArticles() {
-    const [mounted, setMounted] = useState(false);
-    useEffect(() => setMounted(true), []);
-
-    if (!mounted) return null;
-
     return (
         <section className="py-20">
             <div className="container mx-auto px-4">

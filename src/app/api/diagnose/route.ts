@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
             .sort((a, b) => b.score - a.score)
             .slice(0, 10); // Top 10
 
-        return NextResponse.json({ results });
+        return NextResponse.json({ data: results });
 
     } catch (error: any) {
         console.error('Diagnosis error:', error);
