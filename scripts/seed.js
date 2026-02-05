@@ -50,38 +50,56 @@ async function seed() {
         prevention: d.prevention,
         treatment: d.treatment,
         specialist: d.specialist,
+        causes: d.causes,
+        risk_factors: d.risk_factors,
+        when_to_see_doctor: d.when_to_see_doctor,
+        affected_groups: d.affected_groups,
         description: `A condition characterized by ${d.symptoms.slice(0, 3).join(', ')}.`
     }));
 
-    // Fetch existing diseases to check duplicates manualy
-    const { data: existingDiseases } = await supabase.from('diseases').select('name, id');
-    const existingNames = new Set(existingDiseases?.map(d => d.name) || []);
+    // Manual Update/Insert Loop
+    console.log(`Processing ${diseasesPayload.length} diseases...`);
 
-    const newDiseases = diseasesPayload.filter(d => !existingNames.has(d.name));
+    // Fetch existing to map Names -> IDs
+    const { data: existingDiseases } = await supabase.from('diseases').select('id, name');
+    const existingMap = new Map(existingDiseases?.map(d => [d.name, d.id]) || []);
 
-    let diseaseIds = [];
+    const updates = [];
+    const inserts = [];
 
-    // Keep existing IDs
-    if (existingDiseases) {
-        diseaseIds = [...existingDiseases];
-    }
-
-    if (newDiseases.length > 0) {
-        console.log(`Inserting ${newDiseases.length} new diseases...`);
-        const { data: insertedDiseases, error: diseaseError } = await supabase
-            .from('diseases')
-            .insert(newDiseases)
-            .select();
-
-        if (diseaseError) {
-            console.error('Error inserting diseases:', diseaseError);
-            return;
+    for (const d of diseasesPayload) {
+        if (existingMap.has(d.name)) {
+            updates.push({ ...d, id: existingMap.get(d.name) });
+        } else {
+            inserts.push(d);
         }
-        diseaseIds = [...diseaseIds, ...insertedDiseases];
-        console.log('✅ Diseases inserted.');
-    } else {
-        console.log('ℹ️ All diseases already exist.');
     }
+
+    // Perform Updates
+    if (updates.length > 0) {
+        console.log(`Updating ${updates.length} existing diseases...`);
+        for (const update of updates) {
+            const { error } = await supabase
+                .from('diseases')
+                .update(update)
+                .eq('id', update.id);
+            if (error) console.error(`Error updating ${update.name}:`, error);
+        }
+    }
+
+    // Perform Inserts
+    let diseaseIds = existingDiseases || [];
+    if (inserts.length > 0) {
+        console.log(`Inserting ${inserts.length} new diseases...`);
+        const { data: newlyInserted, error } = await supabase.from('diseases').insert(inserts).select('id, name');
+        if (error) {
+            console.error('Error inserting new diseases:', error);
+        } else {
+            diseaseIds = [...diseaseIds, ...newlyInserted];
+        }
+    }
+
+    console.log('✅ Diseases processed.');
 
     // 3. Map Disease Symptoms
     console.log('🔗 Mapping diseases to symptoms...');

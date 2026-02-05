@@ -31,7 +31,12 @@ export async function POST(request: NextRequest) {
           name,
           description,
           risk_level,
-          general_advice
+          general_advice,
+          causes,
+          risk_factors,
+          when_to_see_doctor,
+          specialist,
+          affected_groups
         )
       `)
             .in('symptom_id', symptomIds);
