@@ -1,4 +1,5 @@
 'use client';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Utensils, Activity, Brain } from 'lucide-react';
 
@@ -24,6 +25,11 @@ const tips = [
 ];
 
 export function HealthTips() {
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
+
+    if (!mounted) return null;
+
     return (
         <section className="py-20 bg-slate-50 dark:bg-slate-900/50">
             <div className="container mx-auto px-4">

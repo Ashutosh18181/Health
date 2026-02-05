@@ -1,7 +1,7 @@
 'use client';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
 
 const articles = [
     {
@@ -25,6 +25,11 @@ const articles = [
 ];
 
 export function FeaturedArticles() {
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
+
+    if (!mounted) return null;
+
     return (
         <section className="py-20">
             <div className="container mx-auto px-4">
@@ -50,7 +55,6 @@ export function FeaturedArticles() {
                             className="group cursor-pointer"
                         >
                             <div className={`h-48 rounded-xl mb-4 ${article.color} relative overflow-hidden`}>
-                                {/* Placeholder pattern/image */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
                             </div>
                             <div className="flex items-center gap-3 mb-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">

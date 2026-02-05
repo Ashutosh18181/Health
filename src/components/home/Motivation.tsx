@@ -1,6 +1,6 @@
 'use client';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Quote } from 'lucide-react';
 
 const quotes = [
@@ -11,23 +11,24 @@ const quotes = [
 ];
 
 export function Motivation() {
+    const [mounted, setMounted] = useState(false);
     const [index, setIndex] = useState(0);
 
     useEffect(() => {
+        setMounted(true);
         const timer = setInterval(() => {
             setIndex((prev) => (prev + 1) % quotes.length);
         }, 5000);
         return () => clearInterval(timer);
     }, []);
 
+    if (!mounted) return null;
+
     return (
         <section className="py-24 bg-gradient-to-br from-indigo-600 to-purple-700 text-white relative overflow-hidden">
-            {/* Background Patterns */}
             <div className="absolute inset-0 opacity-10 bg-[url('/file.svg')] bg-repeat opacity-5" />
-
             <div className="container mx-auto px-4 relative z-10 text-center">
                 <Quote className="w-12 h-12 mx-auto mb-8 opacity-50" />
-
                 <div className="h-48 flex items-center justify-center">
                     <AnimatePresence mode="wait">
                         <motion.div

@@ -1,8 +1,14 @@
 'use client';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
 
 export function CTA() {
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
+
+    if (!mounted) return null;
+
     return (
         <section className="py-24 px-4">
             <div className="container mx-auto">

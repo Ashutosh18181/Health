@@ -1,11 +1,17 @@
 'use client';
+import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
-import { useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 
 export function Hero() {
+    const [mounted, setMounted] = useState(false);
     const ref = useRef(null);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     const { scrollYProgress } = useScroll({
         target: ref,
         offset: ["start start", "end start"]
@@ -13,6 +19,14 @@ export function Hero() {
 
     const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+    if (!mounted) {
+        return (
+            <div className="h-[90vh] bg-slate-900 flex items-center justify-center">
+                <div className="animate-pulse text-white/20 text-4xl font-bold font-sans">Diagnostic</div>
+            </div>
+        );
+    }
 
     return (
         <div ref={ref} className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-slate-900 text-white">
@@ -22,10 +36,8 @@ export function Hero() {
                 className="absolute inset-0 z-0"
             >
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900/90 z-10" />
-                {/* Placeholder for high-res image - using a rich gradient for now */}
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900 via-slate-900 to-black" />
 
-                {/* Animated Shapes */}
                 <motion.div
                     animate={{ rotate: 360 }}
                     transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
@@ -76,7 +88,6 @@ export function Hero() {
                 </motion.div>
             </div>
 
-            {/* Scroll Indicator */}
             <motion.div
                 animate={{ y: [0, 10, 0], opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
