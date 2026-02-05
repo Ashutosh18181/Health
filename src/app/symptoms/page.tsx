@@ -76,7 +76,7 @@ export default function SymptomChecker() {
             });
             const data = await res.json();
             if (data.error) throw new Error(data.error);
-            setResults(data.data);
+            setResults(data.results || []);
         } catch (err: any) {
             setError(err.message || 'Failed to analyze symptoms.');
         } finally {
@@ -221,7 +221,7 @@ export default function SymptomChecker() {
                                     <Link href={`/diseases/${r.id}`} key={r.id}>
                                         <div className="group bg-white dark:bg-slate-800 p-6 rounded-2xl border hover:border-primary/50 shadow-sm hover:shadow-md transition-all cursor-pointer mb-4 relative overflow-hidden">
                                             <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${r.risk_level === 'high' ? 'bg-red-500' :
-                                                    r.risk_level === 'moderate' ? 'bg-amber-500' : 'bg-emerald-500'
+                                                r.risk_level === 'moderate' ? 'bg-amber-500' : 'bg-emerald-500'
                                                 }`} />
 
                                             <div className="flex justify-between items-start mb-2">
@@ -234,8 +234,8 @@ export default function SymptomChecker() {
 
                                             <div className="flex gap-2 mt-4">
                                                 <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${r.risk_level === 'high' ? 'bg-red-100 text-red-700' :
-                                                        r.risk_level === 'moderate' ? 'bg-amber-100 text-amber-700' :
-                                                            'bg-emerald-100 text-emerald-700'
+                                                    r.risk_level === 'moderate' ? 'bg-amber-100 text-amber-700' :
+                                                        'bg-emerald-100 text-emerald-700'
                                                     }`}>
                                                     {r.risk_level} Risk
                                                 </span>
